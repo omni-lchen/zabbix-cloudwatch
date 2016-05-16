@@ -173,7 +173,10 @@ def getCloudWatchData(a, r, s, d):
             metric_results = {}
 
             # Generate a zabbix trapper key for a metric
-            if aws_service == 'SNS':
+            if aws_service == 'SQS':
+                queue_name = dimensions['QueueName']
+                zabbix_key =  aws_service + '.' + metric_name + '.' + statistics + '["' + account + '","' + aws_region + '","' + queue_name + '"]'
+            elif aws_service == 'SNS':
                 topic_name = dimensions['TopicName']
                 zabbix_key =  aws_service + '.' + metric_name + '.' + statistics + '["' + account + '","' + aws_region + '","' + topic_name + '"]'
             else:
