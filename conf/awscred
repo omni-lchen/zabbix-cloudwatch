@@ -1,0 +1,8 @@
+[aws_account_1]
+aws_access_key_id=xxxxxx
+aws_secret_access_key=xxxxxx
+
+[aws_account_2]
+aws_access_key_id=xxxxxx
+aws_secret_access_key=xxxxxx
+
