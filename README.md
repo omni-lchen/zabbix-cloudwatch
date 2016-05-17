@@ -7,7 +7,7 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 
 # Installation
 1. Install boto on zabbix server via pip
-   $ pip install boto
+   pip install boto
    
 1. Find the metrics from AmazonCloudWatch Developer Guide and add metrics to the configuration file "conf/aws_services_metrics.conf"
 
