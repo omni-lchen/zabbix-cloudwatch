@@ -6,10 +6,10 @@ AmazonCloudWatch Developer Guide - http://docs.aws.amazon.com/AmazonCloudWatch/l
 AWS SDK in Python Boto - https://github.com/boto/boto
 
 # Installation
-1. Install boto on zabbix server via pip
-   pip install boto
+1. Install boto on zabbix server via pip.
+   * pip install boto
    
-1. Find the metrics from AmazonCloudWatch Developer Guide and add metrics to the configuration file "conf/aws_services_metrics.conf"
+1. Find the metrics from AmazonCloudWatch Developer Guide and add metrics to the configuration file "conf/aws_services_metrics.conf".
 
 2. Create a zabbix template for an AWS service, then create items with metrics key by using zabbix trapper type.
 
