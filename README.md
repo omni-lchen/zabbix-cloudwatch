@@ -25,9 +25,9 @@ AWS SDK in Python Boto - https://github.com/boto/boto
   DynamoDB Item Key1: DynamoDB.\<operations_all\>.\<operations_metrics\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
   operations_returned_item = ['Query', 'Scan']
-  DynamoDB Item Key2: DynamoDB.\<operations_returned_item\>.ReturnedItemCount.\<statistics\>["<aws_account>","<aws_region>","<table_name>"]
+  DynamoDB Item Key2: DynamoDB.\<operations_returned_item\>.ReturnedItemCount.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
-  DynamoDB Other Keys: DynamodB.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
+  DynamoDB Other Keys: DynamoDB.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
 3. Create a new host and linked with the template.
 
