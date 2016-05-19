@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2016-05-19T20:16:38Z</date>
+    <date>2016-05-19T20:24:44Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -370,7 +370,7 @@
                         <trigger_prototype>
                             <expression>{Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].min(#3)}&gt;={$SQS_DLQ_MSG_VISIBLE_TH}</expression>
                             <name>SQS::{#DQNAME}::high number of messages in dead letter queue (LV={ITEM.VALUE})</name>
-                            <url>http://confluence.omnifone.com/display/OPS/AWS+SQS+Operators+Guide</url>
+                            <url/>
                             <status>0</status>
                             <priority>3</priority>
                             <description/>
@@ -380,7 +380,7 @@
                         <trigger_prototype>
                             <expression>{Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].last(0)}&gt;0 and {Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].last(0)}&lt;{$SQS_DLQ_MSG_VISIBLE_TH} and {Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].last(0)}&gt;{Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].max(10m,10m)}</expression>
                             <name>SQS::{#DQNAME}::messages in dead letter queue increased (LV={ITEM.VALUE})</name>
-                            <url>http://confluence.omnifone.com/display/OPS/AWS+SQS+Operators+Guide</url>
+                            <url/>
                             <status>0</status>
                             <priority>2</priority>
                             <description>This trigger is fired when the queue size increased</description>
@@ -390,7 +390,7 @@
                         <trigger_prototype>
                             <expression>{Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].max({$PERIOD})}&gt;{$SQS_DLQ_MSG_VISIBLE_MIN} and {Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].max({$PERIOD})}&lt;{$SQS_DLQ_MSG_VISIBLE_TH} and {Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].max({$PERIOD})}={Template AWS SQS:SQS.ApproximateNumberOfMessagesVisible.Average[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;{#DQNAME}&quot;].max({$PERIOD},{$PERIOD})}</expression>
                             <name>SQS::{#DQNAME}::messages in dead letter queue might not be reprocessed (LV={ITEM.VALUE})</name>
-                            <url>http://confluence.omnifone.com/display/OPS/AWS+SQS+Operators+Guide</url>
+                            <url/>
                             <status>0</status>
                             <priority>3</priority>
                             <description>This trigger is fired when the max queue size has no change within a period.</description>
