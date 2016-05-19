@@ -14,9 +14,11 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 2. Create a zabbix template for an AWS service, then create items with metrics key by using zabbix trapper type.
 
   AWS Metric Zabbix Trapper Item Key Format without Discovery.
+  
   Key: \<aws_service\>.\<metric\>.\<statistics\>
 
   AWS Metric Zabbix Trapper Item Key Format with Discovery.
+  
   Key: \<aws_service\>.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<discovery_item_value\>"]
 
   DynamoDB Item Key Format is different from the standard setup, due to combinations of different dimensions and metrics.
