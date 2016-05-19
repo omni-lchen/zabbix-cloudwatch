@@ -13,6 +13,8 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 
 2. Create a zabbix template for an AWS service, then create items with metrics key by using zabbix trapper type.
 
+   Sample templates can be found in "templates" folder.
+
   AWS Metric Zabbix Trapper Item Key Format without Discovery.
   
   Key: \<aws_service\>.\<metric\>.\<statistics\>
@@ -22,11 +24,15 @@ AWS SDK in Python Boto - https://github.com/boto/boto
   Key: \<aws_service\>.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<discovery_item_value\>"]
 
   DynamoDB Item Key Format is different from the standard setup, due to combinations of different dimensions and metrics.
+  
   operations_all = ['GetItem', 'PutItem', 'Query', 'Scan', 'UpdateItem', 'DeleteItem', 'BatchGetItem', 'BatchWriteItem']
+  
   operations_metrics = ['SuccessfulRequestLatency', 'SystemErrors', 'ThrottledRequests]
+  
   DynamoDB Item Key1: DynamoDB.\<operations_all\>.\<operations_metrics\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
   operations_returned_item = ['Query', 'Scan']
+  
   DynamoDB Item Key2: DynamoDB.\<operations_returned_item\>.ReturnedItemCount.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
   DynamoDB Other Keys: DynamoDB.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
@@ -35,4 +41,8 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 
 4. Create a cloudwatch bash wrapper script for cron job.
 
+   Sample cron jobs can be found in "cron.d" folder.
+
 5. Create a new cron job to send the cloudwatch metrics to the host.
+
+   Sample crontab can be found in "cron.d" folder.
