@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2016-05-19T20:28:56Z</date>
+    <date>2016-05-19T20:44:18Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -29,7 +29,7 @@
                     <type>10</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>omniAWSLLD.sh[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;SQSDeadLetterQueue&quot;,&quot;{$COMPONENT_SQS}&quot;]</key>
+                    <key>awsLLD.sh[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;SQSDeadLetterQueue&quot;,&quot;{$COMPONENT_SQS}&quot;]</key>
                     <delay>43200</delay>
                     <status>0</status>
                     <allowed_hosts/>
@@ -511,7 +511,7 @@
                     <type>10</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>omniAWSLLD.sh[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;SQSMainQueue&quot;,&quot;{$COMPONENT_SQS}&quot;]</key>
+                    <key>awsLLD.sh[&quot;{$AWS_ACCOUNT}&quot;,&quot;{$AWS_REGION}&quot;,&quot;SQSMainQueue&quot;,&quot;{$COMPONENT_SQS}&quot;]</key>
                     <delay>43200</delay>
                     <status>0</status>
                     <allowed_hosts/>
