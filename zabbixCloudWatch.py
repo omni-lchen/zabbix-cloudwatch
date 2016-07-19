@@ -18,9 +18,13 @@ from awsAccount import awsAccount
 from awsConnection import awsConnection
 from boto.exception import BotoServerError
 from pyZabbixSender import pyZabbixSender
+from conf import zabbixInfos
 
 # aws services metrics configuration file
 aws_services_conf = '/opt/zabbix/cloudwatch/conf/aws_services_metrics.conf'
+# zabbix informations
+ZABBIX_SERVER = zabbixInfos.ZABBIX_SERVER
+ZABBIX_PORT = zabbixInfos.ZABBIX_PORT
 
 # Config command line options
 def config_parser():
@@ -200,7 +204,7 @@ def sendLatestCloudWatchData(z, h, d):
 
     global start_time
 
-    zabbix_sender = pyZabbixSender(server=zabbix_server, port=10051)
+    zabbix_sender = pyZabbixSender()
     for cwdata in cloud_watch_data:
         zabbix_key = cwdata['zabbix_key']
         results = cwdata['cloud_watch_results']
