@@ -9,7 +9,7 @@ class awsAccount:
     _aws_secret_access_key = None
 
     def __init__(self, account):
-        CRED = '/opt/zabbix/cloudwatch/conf/awscred'
+        CRED = './conf/awscred'
         Config = ConfigParser.ConfigParser()
         # Read configuration file
         Config.read(CRED)
