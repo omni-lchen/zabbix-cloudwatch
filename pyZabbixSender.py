@@ -10,6 +10,7 @@ import struct
 import time
 import sys
 import re
+from conf import zabbixInfos
 
 # If you're using an old version of python that don't have json available,
 # you can use simplejson instead: https://simplejson.readthedocs.org/en/latest/
@@ -22,8 +23,8 @@ class pyZabbixSender:
     This class allows you to send data to a Zabbix server, using the same
     protocol used by the zabbix_server binary distributed by Zabbix.
     '''
-    ZABBIX_SERVER = "127.0.0.1"
-    ZABBIX_PORT   = 10051
+    ZABBIX_SERVER = zabbixInfos.ZABBIX_SERVER
+    ZABBIX_PORT   = zabbixInfos.ZABBIX_PORT
 
     # Return codes when sending data:
     RC_OK            =   0  # Everything ok
