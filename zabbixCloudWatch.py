@@ -21,7 +21,7 @@ from pyZabbixSender import pyZabbixSender
 from conf import zabbixInfos
 
 # aws services metrics configuration file
-aws_services_conf = '/opt/zabbix/cloudwatch/conf/aws_services_metrics.conf'
+aws_services_conf = './conf/aws_services_metrics.conf'
 # zabbix informations
 ZABBIX_SERVER = zabbixInfos.ZABBIX_SERVER
 ZABBIX_PORT = zabbixInfos.ZABBIX_PORT
