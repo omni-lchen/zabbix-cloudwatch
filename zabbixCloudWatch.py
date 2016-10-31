@@ -211,14 +211,14 @@ def sendLatestCloudWatchData(z, h, d):
             sorts = sorted(results, key=itemgetter('Timestamp'), reverse=True)
             # Get the latest data and timestamp
             zabbix_key_value = sorts[0][statistics]
-            zabbix_key_timestamp = time.mktime(sorts[0]['Timestamp'].timetuple())
+            zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
             # Add data to zabbix sender
             zabbix_sender.addData(zabbix_host, zabbix_key, zabbix_key_value, zabbix_key_timestamp)
         else:  # No data found within the time window
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = time.mktime(start_time.timetuple())
+            zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
             # Add data to zabbix sender
             zabbix_sender.addData(zabbix_host, zabbix_key, zabbix_key_value, zabbix_key_timestamp)
 
@@ -252,7 +252,7 @@ def sendAllCloudWatchData(z, h, d, l):
             sorts = sorted(results, key=itemgetter('Timestamp'), reverse=True)
             for sort in sorts:
                 zabbix_key_value = sort[statistics]
-                zabbix_key_timestamp = time.mktime(sort['Timestamp'].timetuple())
+                zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
                 # Get cloudwatch data in the format of: <timestamp>,<key>,<value>
                 cw_data = str(zabbix_key_timestamp) + ',' + str(zabbix_key) + ',' + str(zabbix_key_value)
                 # Search cloudwatch log with timestamp and key, send cloudwatch data if it is not found in the log
@@ -275,7 +275,7 @@ def sendAllCloudWatchData(z, h, d, l):
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = time.mktime(start_time.timetuple())
+            zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
             # Get cloudwatch data in the format of: <timestamp>,<key>,<value>
             cw_data = str(zabbix_key_timestamp) + ',' + str(zabbix_key) + ',' + str(zabbix_key_value)
             # Search cloudwatch log with timestamp and key, send cloudwatch data if it is not found in the log
