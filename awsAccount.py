@@ -2,6 +2,7 @@
 # Author: Long Chen
 # Description: A class to get aws access key and secret of an AWS account
 
+import os
 import ConfigParser
 
 class awsAccount:
@@ -9,7 +10,8 @@ class awsAccount:
     _aws_secret_access_key = None
 
     def __init__(self, account):
-        CRED = '/opt/zabbix/cloudwatch/conf/awscred'
+        base_path = os.path.dirname(os.path.realpath(__file__))
+        CRED = base_path + '/conf/awscred'
         Config = ConfigParser.ConfigParser()
         # Read configuration file
         Config.read(CRED)
