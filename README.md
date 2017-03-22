@@ -8,41 +8,43 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 # Installation
 1. Install boto on zabbix server via pip.
    * pip install boto
-   
-1. Find the metrics from AmazonCloudWatch Developer Guide and add metrics to the configuration file "conf/aws_services_metrics.conf".
 
-2. Create a zabbix template for an AWS service, then create items with metrics key by using zabbix trapper type.
+2. Add AWS account credential to the configuration file "conf/awscred".
+
+3. Find the metrics from AmazonCloudWatch Developer Guide and add metrics to the configuration file "conf/aws_services_metrics.conf".
+
+4. Create a zabbix template for an AWS service, then create items with metrics key by using zabbix trapper type.
 
    Sample templates can be found in "templates" folder.
 
-  AWS Metric Zabbix Trapper Item Key Format without Discovery.
+   AWS Metric Zabbix Trapper Item Key Format without Discovery.
   
-  Key: \<aws_service\>.\<metric\>.\<statistics\>
+   Key: \<aws_service\>.\<metric\>.\<statistics\>
 
-  AWS Metric Zabbix Trapper Item Key Format with Discovery.
+   AWS Metric Zabbix Trapper Item Key Format with Discovery.
   
-  Key: \<aws_service\>.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<discovery_item_value\>"]
+   Key: \<aws_service\>.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<discovery_item_value\>"]
 
-  DynamoDB Item Key Format is different from the standard setup, due to combinations of different dimensions and metrics.
+   DynamoDB Item Key Format is different from the standard setup, due to combinations of different dimensions and metrics.
   
-  operations_all = ['GetItem', 'PutItem', 'Query', 'Scan', 'UpdateItem', 'DeleteItem', 'BatchGetItem', 'BatchWriteItem']
+   operations_all = ['GetItem', 'PutItem', 'Query', 'Scan', 'UpdateItem', 'DeleteItem', 'BatchGetItem', 'BatchWriteItem']
   
-  operations_metrics = ['SuccessfulRequestLatency', 'SystemErrors', 'ThrottledRequests]
+   operations_metrics = ['SuccessfulRequestLatency', 'SystemErrors', 'ThrottledRequests]
   
-  DynamoDB Item Key1: DynamoDB.\<operations_all\>.\<operations_metrics\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
+   DynamoDB Item Key1: DynamoDB.\<operations_all\>.\<operations_metrics\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
-  operations_returned_item = ['Query', 'Scan']
+   operations_returned_item = ['Query', 'Scan']
   
-  DynamoDB Item Key2: DynamoDB.\<operations_returned_item\>.ReturnedItemCount.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
+   DynamoDB Item Key2: DynamoDB.\<operations_returned_item\>.ReturnedItemCount.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
-  DynamoDB Other Keys: DynamoDB.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
+   DynamoDB Other Keys: DynamoDB.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
-3. Create a new host and linked with the template.
+5. Create a new host and linked with the template.
 
-4. Create a cloudwatch bash wrapper script for cron job.
+6. Create a cloudwatch bash wrapper script for cron job.
 
    Sample cron jobs can be found in "cron.d" folder.
 
-5. Create a new cron job to send the cloudwatch metrics to the host.
+7. Create a new cron job to send the cloudwatch metrics to the host.
 
    Sample crontab can be found in "cron.d" folder.
