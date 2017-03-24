@@ -218,7 +218,7 @@ def sendLatestCloudWatchData(z, h, d):
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
+            zabbix_key_timestamp = int(time.mktime(time.localtime()))  # sorts not available
             # Add data to zabbix sender
             zabbix_sender.addData(zabbix_host, zabbix_key, zabbix_key_value, zabbix_key_timestamp)
 
