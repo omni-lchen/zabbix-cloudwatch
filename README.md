@@ -9,11 +9,13 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 1. Install boto on zabbix server via pip.
    * pip install boto
 
-2. Add AWS account credential to the configuration file "conf/awscred".
+2. Create cloudwatch directory in "/opt/zabbix/cloudwatch" and do a git pull from this repository.
 
-3. Find the metrics from AmazonCloudWatch Developer Guide and add metrics to the configuration file "conf/aws_services_metrics.conf".
+3. Add AWS account credential to the configuration file "conf/awscred".
 
-4. Create a zabbix template for an AWS service, then create items with metrics key by using zabbix trapper type.
+4. Find the metrics from AmazonCloudWatch Developer Guide and add metrics to the configuration file "conf/aws_services_metrics.conf".
+
+5. Create a zabbix template for an AWS service, then create items with metrics key by using zabbix trapper type.
 
    Sample templates can be found in "templates" folder.
 
@@ -39,12 +41,12 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 
    DynamoDB Other Keys: DynamoDB.\<metric\>.\<statistics\>["\<aws_account\>","\<aws_region\>","\<table_name\>"]
 
-5. Create a new host and linked with the template.
+6. Create a new host and linked with the template.
 
-6. Create a cloudwatch bash wrapper script for cron job.
+7. Create a cloudwatch bash wrapper script for cron job.
 
    Sample cron jobs can be found in "cron.d" folder.
 
-7. Create a new cron job to send the cloudwatch metrics to the host.
+8. Create a new cron job to send the cloudwatch metrics to the host.
 
    Sample crontab can be found in "cron.d" folder.
