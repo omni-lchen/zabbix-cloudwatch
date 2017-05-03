@@ -158,7 +158,7 @@ def getCloudWatchData(a, r, s, d):
         conn.cloudwatchConnect(aws_region, aws_access_key_id, aws_secret_access_key)
         cw = conn._aws_connection
 
-        # Read DynamoDB metrics
+        # Read AWS services metrics
         aws_metrics = json.loads(open(aws_services_conf).read())
 
         # Initialize cloud watch data list for storing results
@@ -218,7 +218,7 @@ def sendLatestCloudWatchData(z, h, d):
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
+            zabbix_key_timestamp = int(time.mktime(start_time.timetuple()))
             # Add data to zabbix sender
             zabbix_sender.addData(zabbix_host, zabbix_key, zabbix_key_value, zabbix_key_timestamp)
 
@@ -275,7 +275,7 @@ def sendAllCloudWatchData(z, h, d, l):
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
+            zabbix_key_timestamp = int(time.mktime(start_time.timetuple()))
             # Get cloudwatch data in the format of: <timestamp>,<key>,<value>
             cw_data = str(zabbix_key_timestamp) + ',' + str(zabbix_key) + ',' + str(zabbix_key_value)
             # Search cloudwatch log with timestamp and key, send cloudwatch data if it is not found in the log
