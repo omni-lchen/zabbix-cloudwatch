@@ -3,6 +3,9 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/opt/zabbix/cloudwatch/cron.d
 # ELB monitoring
 */5 * * * * root cron.ELB.sh "<Load_Balancer_Name>" "<zabbix_host>" "<zabbix_server or zabbix_proxy>" "<aws_account>" "<aws_region>" &>/dev/null
 
+# EBS monitoring
+*/5 * * * * root cron.EBS.sh "<Volume_Id>" "<zabbix_host>" "<zabbix_server or zabbix_proxy>" "<aws_account>" "<aws_region>" &>/dev/null
+
 # DynamoDB monitoring
 */5 * * * * root cron.DynamoDB.sh "<DynnamoDB_Table_Name>" "<zabbix_host>" "<zabbix_server or zabbix_proxy>" "<aws_account>" "<aws_region>" &>/dev/null
 
