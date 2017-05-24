@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2017-05-23T10:19:54Z</date>
+    <date>2017-05-24T09:23:36Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -11,7 +11,7 @@
         <template>
             <template>Template AWS EBS</template>
             <name>Template AWS EBS</name>
-            <description>AWS Elastic Block Store monitoring</description>
+            <description/>
             <groups>
                 <group>
                     <name>Templates</name>
@@ -24,7 +24,7 @@
             </applications>
             <items>
                 <item>
-                    <name>Volume burst balance</name>
+                    <name>EBS::Volume burst balance</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -67,7 +67,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume consumed read write ops</name>
+                    <name>EBS::Volume consumed read write ops</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -110,7 +110,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume idle time</name>
+                    <name>EBS::Volume idle time</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -153,7 +153,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume queue length</name>
+                    <name>EBS::Volume queue length</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -196,7 +196,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume read bytes</name>
+                    <name>EBS::Volume read bytes</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -239,7 +239,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume read bytes ops</name>
+                    <name>EBS::Volume read bytes ops</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>1</multiplier>
@@ -282,7 +282,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume throughput percentage</name>
+                    <name>EBS::Volume throughput percentage</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -325,7 +325,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume total read time</name>
+                    <name>EBS::Volume total read time</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -368,7 +368,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume total write time</name>
+                    <name>EBS::Volume total write time</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -411,7 +411,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume write bytes</name>
+                    <name>EBS::Volume write bytes</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -454,7 +454,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Volume write bytes ops</name>
+                    <name>EBS::Volume write bytes ops</name>
                     <type>2</type>
                     <snmp_community/>
                     <multiplier>1</multiplier>
@@ -506,7 +506,7 @@
     <triggers>
         <trigger>
             <expression>{Template AWS EBS:EBS.VolumeThroughputPercentage.Average.last(#5)}&gt;80</expression>
-            <name>EBS High Throughput</name>
+            <name>EBS::High Throughput</name>
             <url/>
             <status>0</status>
             <priority>4</priority>
@@ -516,7 +516,7 @@
         </trigger>
         <trigger>
             <expression>{Template AWS EBS:EBS.VolumeWriteOps.Sum.change()}&gt;500</expression>
-            <name>EBS WriteOps High</name>
+            <name>EBS::WriteOps High</name>
             <url/>
             <status>0</status>
             <priority>4</priority>
@@ -527,7 +527,7 @@
     </triggers>
     <graphs>
         <graph>
-            <name>[EBS] Volume Bytes</name>
+            <name>AWS EBS Volume Bytes</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
@@ -571,7 +571,7 @@
             </graph_items>
         </graph>
         <graph>
-            <name>[EBS] Volume Consumed Read Write Ops</name>
+            <name>AWS EBS Volume Consumed Read Write Ops</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
@@ -603,7 +603,7 @@
             </graph_items>
         </graph>
         <graph>
-            <name>[EBS] Volume Ops</name>
+            <name>AWS EBS Volume Ops</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
@@ -647,7 +647,7 @@
             </graph_items>
         </graph>
         <graph>
-            <name>[EBS] Volume Queue Length</name>
+            <name>AWS EBS Volume Queue Length</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
@@ -679,7 +679,7 @@
             </graph_items>
         </graph>
         <graph>
-            <name>[EBS] Volume Throughput Percentage</name>
+            <name>AWS EBS Volume Throughput Percentage</name>
             <width>900</width>
             <height>200</height>
             <yaxismin>0.0000</yaxismin>
