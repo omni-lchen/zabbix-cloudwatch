@@ -11,6 +11,7 @@ import sys
 import time
 import json
 import fileinput
+from dateutil import tz
 from datetime import datetime
 from optparse import OptionParser
 from operator import itemgetter
@@ -46,6 +47,13 @@ def dimConvert(d):
         secondSplit = word.split('=')
         dim[secondSplit[0]] = secondSplit[1]
     return dim
+
+# Convert timestamp from UTC to local time
+def utcToLocaltimestamp(timestamp):
+    from_zone = tz.tzutc()
+    to_zone = tz.tzlocal()
+    utctimestamp = timestamp.replace(tzinfo=from_zone)
+    return utctimestamp.astimezone(to_zone)
 
 # Get DynamoDB cloudwatch data
 def getCloudWatchDynamodbData(a, r, s, t, i=None):
@@ -211,7 +219,7 @@ def sendLatestCloudWatchData(z, h, d):
             sorts = sorted(results, key=itemgetter('Timestamp'), reverse=True)
             # Get the latest data and timestamp
             zabbix_key_value = sorts[0][statistics]
-            zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
+            zabbix_key_timestamp = int(time.mktime(utcToLocaltimestamp(sorts[0]['Timestamp']).timetuple()))
             # Add data to zabbix sender
             zabbix_sender.addData(zabbix_host, zabbix_key, zabbix_key_value, zabbix_key_timestamp)
         else:  # No data found within the time window
@@ -252,7 +260,7 @@ def sendAllCloudWatchData(z, h, d, l):
             sorts = sorted(results, key=itemgetter('Timestamp'), reverse=True)
             for sort in sorts:
                 zabbix_key_value = sort[statistics]
-                zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
+                zabbix_key_timestamp = int(time.mktime(utcToLocaltimestamp(sorts[0]['Timestamp']).timetuple()))
                 # Get cloudwatch data in the format of: <timestamp>,<key>,<value>
                 cw_data = str(zabbix_key_timestamp) + ',' + str(zabbix_key) + ',' + str(zabbix_key_value)
                 # Search cloudwatch log with timestamp and key, send cloudwatch data if it is not found in the log
@@ -371,4 +379,3 @@ if __name__ == '__main__':
     #cw_log = initCloudWatchLog(aws_service, zabbix_host, aws_region)
     #sendAllCloudWatchData(zabbix_server, zabbix_host, cw_data, cw_log)
     #purgeOldCloudWatchLog(cw_log, log_buffer)
-    
