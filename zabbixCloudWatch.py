@@ -6,6 +6,7 @@
 # Requires Python Zabbix Sender: https://github.com/kmomberg/pyZabbixSender/blob/master/pyZabbixSender.py
 # Example Usage: zabbixCloudWatch.py -z <zabbix_server> -x <zabbix_host> -a <aws_account> -r <aws_region> -s <aws_service> -d "<Dimension>" -p 300 -f "2015-08-13 04:00:00" -t "2015-08-13 04:15:00"
 
+import os
 import re
 import sys
 import time
@@ -21,7 +22,8 @@ from boto.exception import BotoServerError
 from pyZabbixSender import pyZabbixSender
 
 # aws services metrics configuration file
-aws_services_conf = '/opt/zabbix/cloudwatch/conf/aws_services_metrics.conf'
+base_path = os.path.dirname(os.path.realpath(__file__))
+aws_services_conf = base_path + '/conf/aws_services_metrics.conf'
 
 # Config command line options
 def config_parser():
@@ -226,7 +228,7 @@ def sendLatestCloudWatchData(z, h, d):
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = int(time.mktime(start_time.timetuple()))
+            zabbix_key_timestamp = int(time.mktime(utcToLocaltimestamp(start_time).timetuple()))
             # Add data to zabbix sender
             zabbix_sender.addData(zabbix_host, zabbix_key, zabbix_key_value, zabbix_key_timestamp)
 
@@ -283,7 +285,7 @@ def sendAllCloudWatchData(z, h, d, l):
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = int(time.mktime(start_time.timetuple()))
+            zabbix_key_timestamp = int(time.mktime(utcToLocaltimestamp(start_time).timetuple()))
             # Get cloudwatch data in the format of: <timestamp>,<key>,<value>
             cw_data = str(zabbix_key_timestamp) + ',' + str(zabbix_key) + ',' + str(zabbix_key_value)
             # Search cloudwatch log with timestamp and key, send cloudwatch data if it is not found in the log
