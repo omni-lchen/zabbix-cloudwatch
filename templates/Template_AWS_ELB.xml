@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>3.0</version>
-    <date>2016-05-19T17:46:24Z</date>
+    <version>3.4</version>
+    <date>2017-11-03T15:39:46Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -11,7 +11,7 @@
         <template>
             <template>Template AWS ELB</template>
             <name>Template AWS ELB</name>
-            <description>AWS Elastic Load Balancing monitoring</description>
+            <description/>
             <groups>
                 <group>
                     <name>Templates</name>
@@ -27,17 +27,15 @@
                     <name>ELB::Backend Connection Error Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.BackendConnectionErrors.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -45,11 +43,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -65,22 +60,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::Average Healthy Host Count for the past 5 minutes</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ELB.HealthyHostCount.Average</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units/>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -88,11 +89,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>1</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -108,22 +106,23 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing/>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::HTTP Backend 2xx Success Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.HTTPCode_Backend_2XX.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -131,11 +130,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -151,22 +147,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::HTTP Backend 3xx Success Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.HTTPCode_Backend_3XX.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -174,11 +176,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -194,22 +193,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::HTTP Backend 4XX Error Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.HTTPCode_Backend_4XX.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -217,11 +222,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -237,22 +239,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::HTTP Backend 5xx Error Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.HTTPCode_Backend_5XX.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -260,11 +268,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -280,22 +285,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::ELB 4XX Error Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.HTTPCode_ELB_4XX.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -303,11 +314,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -323,22 +331,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::ELB 5xx Error Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.HTTPCode_ELB_5XX.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -346,11 +360,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -366,22 +377,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::Average Latency for the past 5 minutes</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ELB.Latency.Average</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -389,11 +406,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>1</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -409,22 +423,23 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing/>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::HTTP Backend Request Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.RequestCount.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -432,11 +447,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -452,22 +464,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::Spillover Rate</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>1</multiplier>
                     <snmp_oid/>
                     <key>ELB.SpilloverCount.Sum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units>req/s</units>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -475,11 +493,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>0.00333333333333333333</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -499,22 +514,28 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing>
+                        <step>
+                            <type>1</type>
+                            <params>0.00333333333333333333</params>
+                        </step>
+                    </preprocessing>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::Surge Queue Length</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ELB.SurgeQueueLength.Maximum</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units/>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -522,11 +543,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>1</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -542,22 +560,23 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing/>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
                 <item>
                     <name>ELB::Average UnHealthy Host Count for the past 5 minutes</name>
                     <type>2</type>
                     <snmp_community/>
-                    <multiplier>0</multiplier>
                     <snmp_oid/>
                     <key>ELB.UnHealthyHostCount.Average</key>
                     <delay>0</delay>
-                    <history>15</history>
-                    <trends>365</trends>
+                    <history>15d</history>
+                    <trends>365d</trends>
                     <status>0</status>
                     <value_type>0</value_type>
                     <allowed_hosts/>
                     <units/>
-                    <delta>0</delta>
                     <snmpv3_contextname/>
                     <snmpv3_securityname/>
                     <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -565,11 +584,8 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <formula>1</formula>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
-                    <data_type>0</data_type>
                     <authtype>0</authtype>
                     <username/>
                     <password/>
@@ -585,17 +601,17 @@
                     </applications>
                     <valuemap/>
                     <logtimefmt/>
+                    <preprocessing/>
+                    <jmx_endpoint/>
+                    <master_item/>
                 </item>
             </items>
             <discovery_rules/>
+            <httptests/>
             <macros>
                 <macro>
-                    <macro>{$AWS_ACCOUNT}</macro>
-                    <value>awscore</value>
-                </macro>
-                <macro>
-                    <macro>{$AWS_REGION}</macro>
-                    <value>us-east-1</value>
+                    <macro>{$AVERAGE_LATENCY}</macro>
+                    <value>5</value>
                 </macro>
                 <macro>
                     <macro>{$CRIT_5XX}</macro>
@@ -608,6 +624,10 @@
                 <macro>
                     <macro>{$HIGH_5XX}</macro>
                     <value>0.2</value>
+                </macro>
+                <macro>
+                    <macro>{$UNHEALTHY_HOST_COUNT}</macro>
+                    <value>1</value>
                 </macro>
             </macros>
             <templates/>
@@ -800,89 +820,138 @@
     </templates>
     <triggers>
         <trigger>
-            <expression>{Template AWS ELB:ELB.Latency.Average.last(0)}&gt;5</expression>
-            <name>ELB::Average Latency &gt;= 5s (LV={ITEM.VALUE})</name>
+            <expression>{Template AWS ELB:ELB.Latency.Average.last(0)}&gt;{$AVERAGE_LATENCY}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
+            <name>ELB::Average Latency &gt;= {$AVERAGE_LATENCY}s (LV={ITEM.VALUE})</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
             <url/>
             <status>0</status>
             <priority>4</priority>
             <description>ELB Average Latency is greater than 5s for last 5 min.</description>
             <type>0</type>
+            <manual_close>0</manual_close>
             <dependencies/>
+            <tags/>
         </trigger>
         <trigger>
             <expression>{Template AWS ELB:ELB.HTTPCode_Backend_4XX.Sum.min(#3)}&gt;{$HIGH_4XX}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
             <name>ELB::Backend 4xx Errors &gt;= {$HIGH_4XX} req/s (LV={ITEM.VALUE})</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
             <url/>
             <status>0</status>
             <priority>3</priority>
             <description/>
             <type>0</type>
+            <manual_close>0</manual_close>
             <dependencies/>
+            <tags/>
         </trigger>
         <trigger>
             <expression>{Template AWS ELB:ELB.HTTPCode_Backend_5XX.Sum.min(#3)}&gt;{$CRIT_5XX}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
             <name>ELB::Backend 5xx Errors &gt;= {$CRIT_5XX} req/s (LV={ITEM.VALUE})</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
             <url/>
             <status>0</status>
             <priority>5</priority>
             <description/>
             <type>0</type>
+            <manual_close>0</manual_close>
             <dependencies/>
+            <tags/>
         </trigger>
         <trigger>
             <expression>{Template AWS ELB:ELB.HTTPCode_Backend_5XX.Sum.min(#3)}&gt;{$HIGH_5XX}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
             <name>ELB::Backend 5xx Errors &gt;= {$HIGH_5XX} req/s (LV={ITEM.VALUE})</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
             <url/>
             <status>0</status>
             <priority>4</priority>
             <description/>
             <type>0</type>
+            <manual_close>0</manual_close>
             <dependencies>
                 <dependency>
                     <name>ELB::Backend 5xx Errors &gt;= {$CRIT_5XX} req/s (LV={ITEM.VALUE})</name>
                     <expression>{Template AWS ELB:ELB.HTTPCode_Backend_5XX.Sum.min(#3)}&gt;{$CRIT_5XX}</expression>
+                    <recovery_expression/>
                 </dependency>
             </dependencies>
+            <tags/>
         </trigger>
         <trigger>
-            <expression>{Template AWS ELB:ELB.SurgeQueueLength.Maximum.last()}&gt;0 and {Template AWS ELB:ELB.SurgeQueueLength.Maximum.last()}&lt;1000</expression>
+            <expression>{Template AWS ELB:ELB.SurgeQueueLength.Maximum.last()}&gt;1 and {Template AWS ELB:ELB.SurgeQueueLength.Maximum.last()}&lt;1000</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
             <name>ELB::HTTP requests in Surge Queue ((LV={ITEM.VALUE})</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
             <url/>
             <status>0</status>
             <priority>2</priority>
             <description/>
             <type>0</type>
+            <manual_close>0</manual_close>
             <dependencies/>
+            <tags/>
         </trigger>
         <trigger>
             <expression>{Template AWS ELB:ELB.SurgeQueueLength.Maximum.min(#3)}&gt;=1000</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
             <name>ELB::Surge Queue is full</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
             <url>http://confluence.omnifone.com/display/OPS/ELB+Operators+Guide</url>
             <status>0</status>
             <priority>4</priority>
             <description>ELB queue has more than 1000 requests/is full.</description>
             <type>0</type>
+            <manual_close>0</manual_close>
             <dependencies/>
+            <tags/>
         </trigger>
         <trigger>
-            <expression>{Template AWS ELB:ELB.UnHealthyHostCount.Average.last(0)}&gt;0</expression>
+            <expression>{Template AWS ELB:ELB.UnHealthyHostCount.Average.last(0)}&gt;={$UNHEALTHY_HOST_COUNT}</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
             <name>ELB::UnHealthy Host found (LV={ITEM.VALUE})</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
             <url/>
             <status>0</status>
-            <priority>4</priority>
+            <priority>5</priority>
             <description/>
             <type>0</type>
+            <manual_close>0</manual_close>
             <dependencies/>
+            <tags/>
         </trigger>
         <trigger>
             <expression>{Template AWS ELB:ELB.SpilloverCount.Sum.min(#3)}&gt;0</expression>
+            <recovery_mode>0</recovery_mode>
+            <recovery_expression/>
             <name>ELB Spillover Rate is High (LV={ITEM.VALUE})</name>
+            <correlation_mode>0</correlation_mode>
+            <correlation_tag/>
             <url/>
             <status>0</status>
             <priority>4</priority>
             <description/>
             <type>0</type>
+            <manual_close>0</manual_close>
             <dependencies/>
+            <tags/>
         </trigger>
     </triggers>
     <graphs>
