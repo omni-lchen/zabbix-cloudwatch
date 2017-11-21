@@ -50,3 +50,6 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 8. Create a new cron job to send the cloudwatch metrics to the host.
 
    Sample crontab can be found in "cron.d" folder.
+   
+   
+---   
