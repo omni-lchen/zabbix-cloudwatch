@@ -365,6 +365,31 @@ if __name__ == '__main__':
         # set the number as low as possible to get the best performance,
         # but should be more than the total number of monitoring items of the aws service in the host
         ##log_buffer = 1000
+    elif aws_service == 'ElasticMapReduce':
+        # Identify EMR JobFlowId by Name
+        aws = awsAccount(aws_account)
+        aws_access_key_id = aws._aws_access_key_id
+        aws_secret_access_key = aws._aws_secret_access_key
+
+        conn = awsConnection()
+        conn.emrConnect(aws_region, aws_access_key_id, aws_secret_access_key)
+        cw = conn._aws_connection
+        print cw
+        exit()
+        clusters = cw.list_clusters(cluster_states=['RUNNING', 'WAITING'])
+
+        job_flow_id = None
+        for cluster in clusters.clusters:
+            if cluster.name == dimensions['JobFlowId']:
+                job_flow_id = cluster.id
+
+        if job_flow_id is None:
+            print "EMR not found."
+            exit(1)
+
+        dimensions['JobFlowId'] = job_flow_id
+        # Get cloudwatch data of an AWS service
+        cw_data = getCloudWatchData(aws_account, aws_region, aws_service, dimensions)
     else:
         # Get cloudwatch data of an AWS service
         cw_data = getCloudWatchData(aws_account, aws_region, aws_service, dimensions)
