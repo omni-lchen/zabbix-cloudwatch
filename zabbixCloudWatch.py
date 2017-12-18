@@ -374,8 +374,7 @@ if __name__ == '__main__':
         conn = awsConnection()
         conn.emrConnect(aws_region, aws_access_key_id, aws_secret_access_key)
         cw = conn._aws_connection
-        print cw
-        exit()
+
         clusters = cw.list_clusters(cluster_states=['RUNNING', 'WAITING'])
 
         job_flow_id = None
