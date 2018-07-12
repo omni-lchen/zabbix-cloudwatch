@@ -6,11 +6,13 @@
 # Requires Python Zabbix Sender: https://github.com/kmomberg/pyZabbixSender/blob/master/pyZabbixSender.py
 # Example Usage: zabbixCloudWatch.py -z <zabbix_server> -x <zabbix_host> -a <aws_account> -r <aws_region> -s <aws_service> -d "<Dimension>" -p 300 -f "2015-08-13 04:00:00" -t "2015-08-13 04:15:00"
 
+import os
 import re
 import sys
 import time
 import json
 import fileinput
+from dateutil import tz
 from datetime import datetime
 from optparse import OptionParser
 from operator import itemgetter
@@ -20,7 +22,8 @@ from boto.exception import BotoServerError
 from pyZabbixSender import pyZabbixSender
 
 # aws services metrics configuration file
-aws_services_conf = '/opt/zabbix/cloudwatch/conf/aws_services_metrics.conf'
+base_path = os.path.dirname(os.path.realpath(__file__))
+aws_services_conf = base_path + '/conf/aws_services_metrics.conf'
 
 # Config command line options
 def config_parser():
@@ -46,6 +49,13 @@ def dimConvert(d):
         secondSplit = word.split('=')
         dim[secondSplit[0]] = secondSplit[1]
     return dim
+
+# Convert timestamp from UTC to local time
+def utcToLocaltimestamp(timestamp):
+    from_zone = tz.tzutc()
+    to_zone = tz.tzlocal()
+    utctimestamp = timestamp.replace(tzinfo=from_zone)
+    return utctimestamp.astimezone(to_zone)
 
 # Get DynamoDB cloudwatch data
 def getCloudWatchDynamodbData(a, r, s, t, i=None):
@@ -211,14 +221,14 @@ def sendLatestCloudWatchData(z, h, d):
             sorts = sorted(results, key=itemgetter('Timestamp'), reverse=True)
             # Get the latest data and timestamp
             zabbix_key_value = sorts[0][statistics]
-            zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
+            zabbix_key_timestamp = int(time.mktime(utcToLocaltimestamp(sorts[0]['Timestamp']).timetuple()))
             # Add data to zabbix sender
             zabbix_sender.addData(zabbix_host, zabbix_key, zabbix_key_value, zabbix_key_timestamp)
         else:  # No data found within the time window
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = int(time.mktime(start_time.timetuple()))
+            zabbix_key_timestamp = int(time.mktime(utcToLocaltimestamp(start_time).timetuple()))
             # Add data to zabbix sender
             zabbix_sender.addData(zabbix_host, zabbix_key, zabbix_key_value, zabbix_key_timestamp)
 
@@ -252,7 +262,7 @@ def sendAllCloudWatchData(z, h, d, l):
             sorts = sorted(results, key=itemgetter('Timestamp'), reverse=True)
             for sort in sorts:
                 zabbix_key_value = sort[statistics]
-                zabbix_key_timestamp = int(time.mktime(sorts[0]['Timestamp'].timetuple()))
+                zabbix_key_timestamp = int(time.mktime(utcToLocaltimestamp(sorts[0]['Timestamp']).timetuple()))
                 # Get cloudwatch data in the format of: <timestamp>,<key>,<value>
                 cw_data = str(zabbix_key_timestamp) + ',' + str(zabbix_key) + ',' + str(zabbix_key_value)
                 # Search cloudwatch log with timestamp and key, send cloudwatch data if it is not found in the log
@@ -275,7 +285,7 @@ def sendAllCloudWatchData(z, h, d, l):
             # Set the zabbix key value to 0
             zabbix_key_value = 0
             # Set the zabbix key timestamp as the start time for getting cloudwatch data
-            zabbix_key_timestamp = int(time.mktime(start_time.timetuple()))
+            zabbix_key_timestamp = int(time.mktime(utcToLocaltimestamp(start_time).timetuple()))
             # Get cloudwatch data in the format of: <timestamp>,<key>,<value>
             cw_data = str(zabbix_key_timestamp) + ',' + str(zabbix_key) + ',' + str(zabbix_key_value)
             # Search cloudwatch log with timestamp and key, send cloudwatch data if it is not found in the log
@@ -355,6 +365,30 @@ if __name__ == '__main__':
         # set the number as low as possible to get the best performance,
         # but should be more than the total number of monitoring items of the aws service in the host
         ##log_buffer = 1000
+    elif aws_service == 'ElasticMapReduce':
+        # Identify EMR JobFlowId by Name
+        aws = awsAccount(aws_account)
+        aws_access_key_id = aws._aws_access_key_id
+        aws_secret_access_key = aws._aws_secret_access_key
+
+        conn = awsConnection()
+        conn.emrConnect(aws_region, aws_access_key_id, aws_secret_access_key)
+        cw = conn._aws_connection
+
+        clusters = cw.list_clusters(cluster_states=['RUNNING', 'WAITING'])
+
+        job_flow_id = None
+        for cluster in clusters.clusters:
+            if cluster.name == dimensions['JobFlowId']:
+                job_flow_id = cluster.id
+
+        if job_flow_id is None:
+            print "EMR not found."
+            exit(1)
+
+        dimensions['JobFlowId'] = job_flow_id
+        # Get cloudwatch data of an AWS service
+        cw_data = getCloudWatchData(aws_account, aws_region, aws_service, dimensions)
     else:
         # Get cloudwatch data of an AWS service
         cw_data = getCloudWatchData(aws_account, aws_region, aws_service, dimensions)
@@ -371,4 +405,3 @@ if __name__ == '__main__':
     #cw_log = initCloudWatchLog(aws_service, zabbix_host, aws_region)
     #sendAllCloudWatchData(zabbix_server, zabbix_host, cw_data, cw_log)
     #purgeOldCloudWatchLog(cw_log, log_buffer)
-    

@@ -10,6 +10,7 @@ import boto.dynamodb
 import boto.redshift
 import boto.sns
 import boto.route53
+import boto.emr
 
 class awsConnection:
     _aws_connection = None
@@ -31,7 +32,7 @@ class awsConnection:
 
     # RDS connection
     def rdsConnect(self, region, access_key, secret_key):
-        self._aws_connection = boto.sqs.connect_to_region(region, aws_access_key_id=access_key, aws_secret_access_key=secret_key)
+        self._aws_connection = boto.rds.connect_to_region(region, aws_access_key_id=access_key, aws_secret_access_key=secret_key)
 
     # DynamoDB connection
     def dynamodbConnect(self, region, access_key, secret_key):
@@ -48,3 +49,7 @@ class awsConnection:
     # Route53 connection
     def route53Connect(self, region, access_key, secret_key):
         self._aws_connection = boto.route53.connect_to_region(region, aws_access_key_id=access_key, aws_secret_access_key=secret_key)
+
+    # EMR connection
+    def emrConnect(self, region, access_key, secret_key):
+        self._aws_connection = boto.emr.connect_to_region(region, aws_access_key_id=access_key, aws_secret_access_key=secret_key)
