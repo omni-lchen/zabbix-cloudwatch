@@ -24,6 +24,9 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:/opt/zabbix/cloudwatch/cron.d
 # ElastiCache monitoring
 */5 * * * * root cron.ElastiCache.sh "<Cluster_ID>" "<zabbix_host>" "<zabbix_server or zabbix_proxy>" "<aws_account>" "<aws_region>" &>/dev/null
 
+# ES monitoring
+*/5 * * * * root cron.ES.sh "<Client_Id>" "<Domain_name>" "<zabbix_host>" "<zabbix_server or zabbix_proxy>" "<aws_account>" "<aws_region>" &>/dev/null
+
 # SQS monitoring
 */5 * * * * root cron.SQS.sh "<Queue_Name>" "SQSMainQueue" <zabbix_host>" "<zabbix_server or zabbix_proxy>" "<aws_account>" "<aws_region>" &>/dev/null
 */5 * * * * root cron.SQS.sh "<Queue_Name>" "SQSDeadLetterQueue" <zabbix_host>" "<zabbix_server or zabbix_proxy>" "<aws_account>" "<aws_region>" &>/dev/null
