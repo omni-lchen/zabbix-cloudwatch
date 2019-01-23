@@ -12,6 +12,7 @@ import sys
 import time
 import json
 import fileinput
+import logging
 from dateutil import tz
 from datetime import datetime
 from optparse import OptionParser
@@ -37,6 +38,7 @@ def config_parser():
     parser.add_option("-p", "--period", dest="period", help="Period", metavar="PERIOD")
     parser.add_option("-f", "--starttime", dest="starttime", help="Start Time", metavar="STARTTIME")
     parser.add_option("-t", "--endtime", dest="endtime", help="End Time", metavar="ENDTIME")
+    parser.add_option("--debug", dest="debug", action="store_true", metavar="DEBUG", default=False, help="Enable debug output")
     return parser
 
 # Covert dimensions string to json format
@@ -344,6 +346,11 @@ if __name__ == '__main__':
 
     # Read options from parser
     (options, args) = parser.parse_args()
+
+    # Activate debug log if needed
+    if options.debug:
+        logging.basicConfig( level=logging.DEBUG )
+        logging.debug( "Debug output activated" )
     zabbix_server = options.zabbixserver
     zabbix_host =  options.zabbixhost
     aws_account = options.accountname
