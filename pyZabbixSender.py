@@ -10,6 +10,7 @@ import struct
 import time
 import sys
 import re
+import logging
 
 # If you're using an old version of python that don't have json available,
 # you can use simplejson instead: https://simplejson.readthedocs.org/en/latest/
@@ -81,19 +82,20 @@ class pyZabbixSender:
         data_length = len(mydata)
         data_header = str(struct.pack('q', data_length))
         data_to_send = 'ZBXD\1' + str(data_header) + str(mydata)
+        logging.debug('Zabbix data to send : %s', data_to_send)
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect((self.zserver, self.zport))
             sock.send(data_to_send)
         except Exception, err:
             err_message = u'Error talking to server: %s\n' %str(err)
-            sys.stderr.write(err_message)
+            logging.error(err_message)
             return self.RC_ERR_CONN, err_message
 
         response_header = sock.recv(5)
         if not response_header == 'ZBXD\1':
             err_message = u'Invalid response from server. Malformed data?\n---\n%s\n---\n' % str(mydata)
-            sys.stderr.write(err_message)
+            logging.error(err_message)
             return self.RC_ERR_INV_RESP, err_message
 
         response_data_header = sock.recv(8)
@@ -105,14 +107,14 @@ class pyZabbixSender:
         match = re.match('^.*failed.+?(\d+).*$', response['info'].lower() if 'info' in response else '')
         if match is None:
             err_message = u'Unable to parse server response - \n%s\n' % str(response)
-            sys.stderr.write(err_message)
+            logging.error(err_message)
             return self.RC_ERR_PARS_RESP, response
         else:
             fails = int(match.group(1))
             if fails > 0:
                 if self.verbose is True:
                     err_message = u'Failures reported by zabbix when sending:\n%s\n' % str(mydata)
-                    sys.stderr.write(err_message)
+                    logging.error(err_message)
                 return self.RC_ERR_FAIL_SEND, response
         return self.RC_OK, response
 

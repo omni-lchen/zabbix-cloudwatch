@@ -148,8 +148,8 @@ def getCloudWatchDynamodbData(a, r, s, t, i=None):
         return cloud_watch_data
 
     except BotoServerError, error:
-        print >> sys.stderr, 'CloudWatch ERROR: ', error
-
+        logging.error( 'CloudWatch ERROR: %s', error )
+        sys.exit(1)
 # Get cloudwatch metrics data of an AWS service
 def getCloudWatchData(a, r, s, d):
     account = a
@@ -169,6 +169,8 @@ def getCloudWatchData(a, r, s, d):
         conn = awsConnection()
         conn.cloudwatchConnect(aws_region, aws_access_key_id, aws_secret_access_key)
         cw = conn._aws_connection
+
+        logging.info('Current Cloudwatch connection : %s', cw)
 
         # Read AWS services metrics
         aws_metrics = json.loads(open(aws_services_conf).read())
@@ -198,11 +200,13 @@ def getCloudWatchData(a, r, s, d):
             metric_results['cloud_watch_results'] = results
             metric_results['statistics'] = statistics
             cloud_watch_data.append(metric_results)
-
+        
+        logging.debug('Cloudwatch data : %s', cloud_watch_data)
         return cloud_watch_data
 
     except BotoServerError, error:
-        print >> sys.stderr, 'CloudWatch ERROR: ', error
+        logging.error('CloudWatch ERROR: %s', error )
+        sys.exit(1)
 
 # Send latest cloudwatch data to zabbix server
 def sendLatestCloudWatchData(z, h, d):
@@ -390,7 +394,7 @@ if __name__ == '__main__':
                 job_flow_id = cluster.id
 
         if job_flow_id is None:
-            print "EMR not found."
+            logging.error( "EMR not found." )
             exit(1)
 
         dimensions['JobFlowId'] = job_flow_id
