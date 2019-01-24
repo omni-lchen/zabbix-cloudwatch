@@ -43,11 +43,13 @@ AWS SDK in Python Boto - https://github.com/boto/boto
 
 6. Create a new host and linked with the template.
 
-7. Create a cloudwatch bash wrapper script for cron job.
+7. Create the yaml configuration file 
+
+8. Create a cloudwatch bash wrapper script for cron job.
 
    Sample cron jobs can be found in "cron.d" folder.
 
-8. Create a new cron job to send the cloudwatch metrics to the host.
+9. Create a new cron job to send the cloudwatch metrics to the host.
 
    Sample crontab can be found in "cron.d" folder.
    

@@ -1,0 +1,28 @@
+---
+
+kind: ZabbixAWSConfigFile
+# here goes the zabbix related configuration
+zabbix:
+  server: zabbix.example.com
+  host: aws-monitoring.example.com
+# here goes the AWS account related configuration
+aws:
+  region: eu-west-1
+  accountName: aws_account_1 
+# List of elements to monitore
+spec:
+  # To find out type, dimensions and metrics to use,
+  #  please refer to https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-services-cloudwatch-metrics.html
+  - type: ELB
+    dimensions:
+      LoadBalancerName: loadbalancername
+    metrics:
+      - metric: HealthyHostCount
+        statistics: Average
+  - type: ApplicationELB
+    dimensions:
+      LoadBalancer: app/loadbalancername/1a2b3c4d1a2b3c4d
+      TargetGroup: targetgroup/targetgroupname/c4db3c4d1a2b1a23
+    metrics:
+      - metric: HealthyHostCount
+        statistics: Min
