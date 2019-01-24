@@ -30,10 +30,6 @@ aws_services_conf = base_path + '/conf/aws_services_metrics.conf'
 # Config command line options
 def config_parser():
     parser = OptionParser(usage="usage: %prog [options]", version="%prog 2.0")
-    parser.add_option("-z", "--zabbix", dest="zabbixserver", help="zabbix server name", metavar="ZABBIX")
-    parser.add_option("-x", "--host", dest="zabbixhost", help="zabbix host name", metavar="HOST")
-    parser.add_option("-a", "--account", dest="accountname", help="account name", metavar="ACCOUNT")
-    parser.add_option("-r", "--region", dest="region", help="aws region", metavar="REGION")
     parser.add_option("-p", "--period", dest="period", help="Period", metavar="PERIOD")
     parser.add_option("-f", "--starttime", dest="starttime", help="Start Time", metavar="STARTTIME")
     parser.add_option("-t", "--endtime", dest="endtime", help="End Time", metavar="ENDTIME")
@@ -366,10 +362,10 @@ if __name__ == '__main__':
         logging.debug( "Debug output activated" )
     config = loadConfiguration(options.config)
 
-    zabbix_server = options.zabbixserver
-    zabbix_host =  options.zabbixhost
-    aws_account = options.accountname
-    aws_region = options.region
+    zabbix_server = config['zabbix']['server']
+    zabbix_host =  config['zabbix']['host']
+    aws_account = config['aws']['accountName']
+    aws_region = config['aws']['region']
     period = options.period
 
     # Set global start time and end time in cloudwatch
