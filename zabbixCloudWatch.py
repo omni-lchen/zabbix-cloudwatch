@@ -13,6 +13,7 @@ import time
 import json
 import fileinput
 import logging
+import yaml
 from dateutil import tz
 from datetime import datetime
 from optparse import OptionParser
@@ -33,13 +34,23 @@ def config_parser():
     parser.add_option("-x", "--host", dest="zabbixhost", help="zabbix host name", metavar="HOST")
     parser.add_option("-a", "--account", dest="accountname", help="account name", metavar="ACCOUNT")
     parser.add_option("-r", "--region", dest="region", help="aws region", metavar="REGION")
-    parser.add_option("-s", "--service", dest="service", help="aws service (ELB, SQS, DynamoDB, etc...)", metavar="SERVICE")
-    parser.add_option("-d", "--dimensions", dest="dimensions", help="Dimensions split with comma (LoadBalancerName=, etc...)", metavar="DIMENSIONS")
     parser.add_option("-p", "--period", dest="period", help="Period", metavar="PERIOD")
     parser.add_option("-f", "--starttime", dest="starttime", help="Start Time", metavar="STARTTIME")
     parser.add_option("-t", "--endtime", dest="endtime", help="End Time", metavar="ENDTIME")
     parser.add_option("--debug", dest="debug", action="store_true", metavar="DEBUG", default=False, help="Enable debug output")
+
+    parser.add_option("-c", "--config", dest="config", help="Configuration file to load containing everything that needs to be monitored", metavar="CONFIG")
+
     return parser
+
+# Load configuration
+def loadConfiguration( config_path ):
+    with open( config_path, 'r') as stream:
+        try:
+            return yaml.load(stream)
+        except yaml.YAMLError as exc:
+            logging.error("Error loading file : %s", exc)
+            sys.exit(1)
 
 # Covert dimensions string to json format
 def dimConvert(d):
@@ -89,7 +100,7 @@ def getCloudWatchDynamodbData(a, r, s, t, i=None):
         # Initialize cloud watch data list for storing results
         cloud_watch_data = []
 
-        for metric in aws_metrics[aws_service]:
+        for metric in aws_metrics:
             metric_name = metric['metric']
             statistics = metric['statistics']
             dimensions = {}
@@ -151,13 +162,14 @@ def getCloudWatchDynamodbData(a, r, s, t, i=None):
         logging.error( 'CloudWatch ERROR: %s', error )
         sys.exit(1)
 # Get cloudwatch metrics data of an AWS service
-def getCloudWatchData(a, r, s, d):
+def getCloudWatchData(a, r, s, d, m):
     account = a
     aws_account = awsAccount(account)
     aws_access_key_id = aws_account._aws_access_key_id
     aws_secret_access_key = aws_account._aws_secret_access_key
     aws_region = r
     aws_service = s
+    aws_metrics = m
     dimensions = d
 
     namespace = 'AWS/' + aws_service
@@ -172,13 +184,10 @@ def getCloudWatchData(a, r, s, d):
 
         logging.info('Current Cloudwatch connection : %s', cw)
 
-        # Read AWS services metrics
-        aws_metrics = json.loads(open(aws_services_conf).read())
-
         # Initialize cloud watch data list for storing results
         cloud_watch_data = []
 
-        for metric in aws_metrics[aws_service]:
+        for metric in aws_metrics:
             metric_name = metric['metric']
             statistics = metric['statistics']
             # Get cloudwatch data
@@ -355,64 +364,70 @@ if __name__ == '__main__':
     if options.debug:
         logging.basicConfig( level=logging.DEBUG )
         logging.debug( "Debug output activated" )
+    config = loadConfiguration(options.config)
+
     zabbix_server = options.zabbixserver
     zabbix_host =  options.zabbixhost
     aws_account = options.accountname
     aws_region = options.region
-    aws_service = options.service
-    dimensions = dimConvert(options.dimensions)
     period = options.period
 
     # Set global start time and end time in cloudwatch
     start_time = datetime.strptime(options.starttime, "%Y-%m-%d %H:%M:%S")
     end_time = datetime.strptime(options.endtime, "%Y-%m-%d %H:%M:%S")
 
-    if aws_service == 'DynamoDB':
-        table_name = dimensions['TableName']
-        # Get cloudwatch data of a DynamoDB table
-        cw_data = getCloudWatchDynamodbData(aws_account, aws_region, aws_service, table_name)
-        # Only use log buffer with "sendAllCloudWatchData" function
-        # log buffer is used to check the cloudwatch history data,
-        # set the number as low as possible to get the best performance,
-        # but should be more than the total number of monitoring items of the aws service in the host
-        ##log_buffer = 1000
-    elif aws_service == 'ElasticMapReduce':
-        # Identify EMR JobFlowId by Name
-        aws = awsAccount(aws_account)
-        aws_access_key_id = aws._aws_access_key_id
-        aws_secret_access_key = aws._aws_secret_access_key
+    for aws_elem in config['spec']:
 
-        conn = awsConnection()
-        conn.emrConnect(aws_region, aws_access_key_id, aws_secret_access_key)
-        cw = conn._aws_connection
+        aws_service = aws_elem['type']
+        dimensions = aws_elem['dimensions']
+        metrics = aws_elem['metrics']
 
-        clusters = cw.list_clusters(cluster_states=['RUNNING', 'WAITING'])
+        if aws_service == 'DynamoDB':
+            table_name = dimensions['TableName']
+            # Get cloudwatch data of a DynamoDB table
+            cw_data = getCloudWatchDynamodbData(aws_account, aws_region, aws_service, table_name)
+            # Only use log buffer with "sendAllCloudWatchData" function
+            # log buffer is used to check the cloudwatch history data,
+            # set the number as low as possible to get the best performance,
+            # but should be more than the total number of monitoring items of the aws service in the host
+            ##log_buffer = 1000
+        elif aws_service == 'ElasticMapReduce':
+            # Identify EMR JobFlowId by Name
+            aws = awsAccount(aws_account)
+            aws_access_key_id = aws._aws_access_key_id
+            aws_secret_access_key = aws._aws_secret_access_key
 
-        job_flow_id = None
-        for cluster in clusters.clusters:
-            if cluster.name == dimensions['JobFlowId']:
-                job_flow_id = cluster.id
+            conn = awsConnection()
+            conn.emrConnect(aws_region, aws_access_key_id, aws_secret_access_key)
+            cw = conn._aws_connection
 
-        if job_flow_id is None:
-            logging.error( "EMR not found." )
-            exit(1)
+            clusters = cw.list_clusters(cluster_states=['RUNNING', 'WAITING'])
 
-        dimensions['JobFlowId'] = job_flow_id
-        # Get cloudwatch data of an AWS service
-        cw_data = getCloudWatchData(aws_account, aws_region, aws_service, dimensions)
-    else:
-        # Get cloudwatch data of an AWS service
-        cw_data = getCloudWatchData(aws_account, aws_region, aws_service, dimensions)
-        # Only use log buffer with "sendAllCloudWatchData" function
-        # log buffer is used to check the cloudwatch history data,
-        # set the number as low as possible to get the best performance,
-        # but should be more than the total number of monitoring items of the aws service in the host
-        ##log_buffer = 500
+            job_flow_id = None
+            for cluster in clusters.clusters:
+                if cluster.name == dimensions['JobFlowId']:
+                    job_flow_id = cluster.id
 
-    # Send latest cloudwatch data with zabbix sender
-    sendLatestCloudWatchData(zabbix_server, zabbix_host, cw_data)
+            if job_flow_id is None:
+                logging.error( "EMR not found." )
+                exit(1)
 
-    # Send all cloudwatch data in a specified time window with zabbix sender
-    #cw_log = initCloudWatchLog(aws_service, zabbix_host, aws_region)
-    #sendAllCloudWatchData(zabbix_server, zabbix_host, cw_data, cw_log)
-    #purgeOldCloudWatchLog(cw_log, log_buffer)
+            dimensions['JobFlowId'] = job_flow_id
+            # Get cloudwatch data of an AWS service
+            cw_data = getCloudWatchData(aws_account, aws_region, aws_service, dimensions, metrics)
+        else:
+            # Get cloudwatch data of an AWS service
+            cw_data = getCloudWatchData(aws_account, aws_region, aws_service, dimensions, metrics)
+            # Only use log buffer with "sendAllCloudWatchData" function
+            # log buffer is used to check the cloudwatch history data,
+            # set the number as low as possible to get the best performance,
+            # but should be more than the total number of monitoring items of the aws service in the host
+            ##log_buffer = 500
+
+        # Send latest cloudwatch data with zabbix sender
+        sendLatestCloudWatchData(zabbix_server, zabbix_host, cw_data)
+
+        # Send all cloudwatch data in a specified time window with zabbix sender
+        #cw_log = initCloudWatchLog(aws_service, zabbix_host, aws_region)
+        #sendAllCloudWatchData(zabbix_server, zabbix_host, cw_data, cw_log)
+        #purgeOldCloudWatchLog(cw_log, log_buffer)
