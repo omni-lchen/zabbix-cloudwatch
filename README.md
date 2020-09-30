@@ -5,7 +5,7 @@ AmazonCloudWatch Developer Guide - http://docs.aws.amazon.com/AmazonCloudWatch/l
 
 AWS SDK in Python Boto - https://github.com/boto/boto
 
-# Installation
+# Installation in Just Some Easy Steps thats helps you alot :-
 1. Install boto on zabbix server via pip.
    * pip install boto
 
